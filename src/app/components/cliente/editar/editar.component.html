@@ -1,0 +1,73 @@
+<div class="container mt-5 mb-5">
+    <h4>Mi perfil</h4>
+<hr>
+<form [formGroup]="forma" (ngSubmit)="guardarCambios()" >
+  <div>
+      <h3>Datos del usuario</h3>
+    <div class="row">
+        <div class="col">
+            <label class="col-2 col-form-label">Nombre</label>
+          <input type="text" class="form-control" placeholder="Nombre" formControlName="nombre" >
+        </div>
+
+        <div class="col">
+            <label class="col-2 col-form-label">Apellido</label>
+          <input type="text" class="form-control" placeholder="Apellido" formControlName="apellido" >
+        </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col">
+        <label class="col-2 col-form-label">Correo</label>
+      <input class="form-control"type="email"placeholder="Correo electrónico" formControlName="correo" >
+    </div>
+    <div class="col">
+        <label class="col-2 col-form-label">Telefono</label>
+      <input type="number" class="form-control" placeholder="Telefono" formControlName="telefono" >
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <h3>Datos del domicilio</h3>
+    <div formGroupName="domicilio">
+<div class="row  ">
+    <div class="col">
+         <label class="col-2 col-form-label">Localidad</label>
+     <!-- <input type="text" class="form-control" placeholder="Localidad" formControlName="localidad" > -->
+      <select name="localidad" 
+      formControlName="localidad"
+      class="form-control">
+      <option value=0>Localidad</option>
+      <option [value]="unidad.id" *ngFor="let unidad
+          of localidades;
+          let i= index">
+          {{unidad.denominacion}}</option> 
+  </select>
+    </div>
+
+    <div class="col">
+        <label class="col-2 col-form-label">Numero</label>
+      <input type="number" class="form-control" placeholder="Numero" formControlName="numero" >
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <label class="col-2 col-form-label">Calle</label>
+      <input type="text" class="form-control" placeholder="Calle" formControlName="calle" >
+    </div>
+  </div>
+    <div class="col">
+        <label class="col-2 col-form-label">&nbsp;</label>
+        <div class="input-group col-md-8">
+          <button type="submit" class="btn btn-outline-primary">
+            Guardar
+          </button>
+        </div>
+      </div>
+</div>
+
+</div>
+
+</form>
+</div>

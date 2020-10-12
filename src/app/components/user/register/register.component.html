@@ -1,0 +1,104 @@
+<section id="register" class="mb-5 mt-5">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-6 col-md-4 mx-auto">
+                <div class="card_register">
+                    <div class="card">
+                        <div class="card-body text-center">
+
+
+                            <form #forma="ngForm" (ngSubmit)="onRegister()">
+                                <div class="form-group">
+
+                                    <h1 class="h3 mb-3 font-weight-normal">Registrate</h1>
+                                    <button class="btn-social btn-google btn
+                                        btn-block" (click)="onLoginGoogle()">
+                                        <span class="fa fa-google"></span>Continuar
+                                        con GOOGLE</button>
+                                </div>
+                                <p>o registrate con tu correo</p>
+                                <div class="form-group">
+
+                                    <input type="text" #nombre="ngModel"
+                                        name="nombre" class="form-control"
+                                        placeholder="Nombre"
+                                        [(ngModel)]="user.nombre" required
+                                        minlength="3">
+                                </div>
+
+                                <div class="alert alert-danger" role="alert"
+                                    *ngIf="nombre.touched && !nombre.valid">
+                                    <div *ngIf="nombre.errors?.required">Debe
+                                        ingresar el nombre</div>
+                                    <div *ngIf="nombre.errors?.minlength">Al
+                                        menos 3 caracteres</div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" #apellido="ngModel"
+                                        name="apellido" class="form-control"
+                                        placeholder="Apellido"
+                                        [(ngModel)]="user.apellido" required
+                                        minlength="3">
+                                </div>
+                                <div class="alert alert-danger" role="alert"
+                                    *ngIf="apellido.touched && !apellido.valid">
+                                    <div *ngIf="apellido.errors?.required">Debe
+                                        ingresar el apellido</div>
+                                    <div *ngIf="apellido.errors?.minlength">Al
+                                        menos 3 caracteres</div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" #email="ngModel"
+                                        name="email" class="form-control"
+                                        placeholder="Email"
+                                        [(ngModel)]="user.correo" required
+                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                                        minlength="8">
+                                </div>
+
+                                <div class="alert alert-danger" role="alert"
+                                    *ngIf="email.touched && !email.valid">
+                                    <div *ngIf="email.errors?.required">Debe
+                                        ingresar el correo</div>
+                                    <div *ngIf="email.errors?.minlength">Al
+                                        menos 8 caracteres</div>
+                                    <div *ngIf="email.errors?.pattern">
+                                        Debe cumplir con el formato de correo
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="password" #pass="ngModel"
+                                        name="password" class="form-control"
+                                        placeholder="Password"
+                                        [(ngModel)]="password" required
+                                        minlength="8" maxlength="15">
+                                </div>
+                                <div class="alert alert-danger" role="alert"
+                                    *ngIf="pass.touched && !pass.valid">
+                                    <div *ngIf="pass.errors?.required">Debe
+                                        ingresar la contraseña</div>
+                                    <div *ngIf="pass.errors?.minlength">Al menos
+                                        8 caracteres</div>
+                                </div>
+                                <div class="alert alert-danger" role="alert"
+                                    *ngIf="isError">
+                                    <div *ngIf="isError">{{msgError}}</div>
+                                </div>
+
+                                <button type="submit" [disabled]="!forma.valid"
+                                    class="btn btn-lg btn-primary btn-block">Registrarme</button>
+                                <div class="form-group">
+                                    <a routerLink="/user/login"
+                                        class="form-control login-user">¿Ya
+                                        tienes una cuenta?</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

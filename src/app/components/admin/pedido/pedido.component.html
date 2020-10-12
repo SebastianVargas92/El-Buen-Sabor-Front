@@ -1,0 +1,285 @@
+
+<div class="container mt-5">
+    <div id="modalAgregar" class="modal fade mt-5">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header mb-3">
+                    <h4 class="modal-title">Facturar</h4>
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">&times;</button>
+                </div>
+                <form (ngSubmit)="facturar(forma)" #forma="ngForm">
+                    <div class="form-group row">
+                        <!-- <label class="col-2 col-form-label ml-2">Fecha</label> -->
+                        <div class="col-4">
+                            <label class="ml-4">Fecha</label>
+                            {{factura.fecha | date:'shortDate'}}
+                        </div>
+                        <!--  <div class="col-md-4" *ngIf="pedido != null">
+                            <label class="ml-4">Envio</label>
+                            <p *ngIf="pedido.tipoEnvio == 1">
+                                Busco en local
+                            </p>
+                            <p *ngIf="pedido.tipoEnvio == 2">
+                                Envialo a mi casa
+                            </p>
+                          
+                        </div> -->
+                    </div>
+                    <div>
+                        <label class="ml-4">Detalles : </label>
+                        <table *ngIf="pedido != null" border="1" align="center">
+                            <tr>
+                                <td> Articulo</td>
+                                <td> Cantidad</td>
+                                <td>Precio</td>
+                                <td>Subtotal</td>
+                            </tr>
+                            <tr *ngFor="let a of pedido.detallePedido">
+
+                                <td *ngIf="a.articuloManufacturado == null">
+                                    {{a.articuloReventa.denominacion}}</td>
+
+                                <td *ngIf="a.articuloReventa == null">
+                                    {{a.articuloManufacturado.denominacion}}</td>
+                                <td>{{a.cantidad}}</td>
+
+                                <td *ngIf="a.articuloManufacturado == null">
+                                    {{a.articuloReventa.precioVenta | currency}}</td>
+                                <td *ngIf="a.articuloReventa == null">
+                                    {{a.articuloManufacturado.precioVenta
+                                    |currency}}</td>
+                                <td>{{a.subtotal |currency}}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Descuento:
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td> {{factura.montoDescuento |currency}}</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Total:
+                                </td>
+                                <td>
+
+                                </td>
+                                <td>
+                                </td>
+                                <td> {{factura.total |currency}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div *ngIf="pedido != null">
+                        <div class="form-group row" *ngIf="pedido.tipoEnvio ==
+                            1">
+                            <div class="col-4 ml-3 mt-3">
+                                <select name="tipoPago" class="form-control"
+                                    [(ngModel)]="factura.formaPago">
+                                    <option value="0">
+                                        Tipo de Pago
+                                    </option>
+                                    <option value="1">
+                                        Efectivo
+                                    </option>
+                                    <option value="2">
+                                        Tarjeta Credito
+                                    </option>
+                                    <option value="3">
+                                        Tarjeta Debito
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-4 ml-3" *ngIf="factura.formaPago !=
+                                0 &&
+                                factura.formaPago != 1">
+                                Numero de tarjeta
+                                <!--   <input type="number"  [(ngModel)]="factura.nroTarjeta"> -->
+                                <input class="form-control"
+                                    type="number"
+                                    placeholder="Tarjeta"
+                                    name="numeroTarjeta"
+                                    [(ngModel)]="factura.nroTarjeta"
+                                    minlength="8" required
+                                    #denominacion="ngModel">
+                                <div *ngIf="denominacion.errors?.required"
+                                    class="form-control-feedback">
+                                    Este campo es requerido.
+                                </div>
+                                <div *ngIf="denominacion.errors?.minlength"
+                                    class="form-control-feedback">
+                                    Por lo menos
+                                    {{denominacion.errors.minlength.requiredLength}}
+                                    carácteres.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row" *ngIf="pedido.tipoEnvio !=
+                            1">
+                            <label class="ml-4 mt-3">Forma de pago Efectivo.</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label">&nbsp;</label>
+                        <div class="input-group col-md-8">
+                            <button type="submit" [disabled]="!forma.valid"
+                                class="btn btn-success ml-3">
+                                Facturar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-success">Aceptar</button> -->
+                    <button type="button" class="btn btn-default"
+                        data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h1>Lista de pedidos</h1>
+    <table class="table table-dark table-responsive">
+        <thead>
+            <div class="row">
+               <!--  class="form-control" -->
+                <div class="col-md-6" *ngIf="rol != 'cocinero'">
+                    <select  name="estadoPedido" 
+                    [(ngModel)]="estado" (change)="getPedidosPag()">
+                    <option value="1"> A Confirmar</option>
+                    <option value="2">En cocina </option>
+                    <option value="3"> Listos</option>
+                    <option value="4">En delivery </option>
+                    <option value="5">Facturado </option>
+                    <option value="0">Cancelado </option>
+                </select>
+                  
+                </div>
+                <div class="col-md-4">
+                    <select [(ngModel)]="asc" (change)="getPedidosPag()">
+                        <option value="true">Ascendente</option>
+                        <option value="false">Descendente</option>
+                    </select>
+                </div>
+            </div>
+           
+           
+            <tr>
+                <th scope="col">Fecha</th>
+               
+               
+                <th scope="col" >Entrega</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Detalles</th>
+                <th scope="col">Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let pedido of pedidos; let i= index">
+                <td> {{pedido.fecha | date:"dd-MM-yyyy HH:mm:ss a"}} <!-- date:'short' --></td>
+                <td *ngIf="pedido.estado != 2" >
+                    <p *ngIf="pedido.tipoEnvio == 1">
+                        Busco en local
+                    </p>
+                    <p *ngIf="pedido.tipoEnvio == 2">
+                        Envialo a mi casa
+                    </p>
+                    <!--  {{pedido.tipoEnvio}} --></td>
+                    <td *ngIf="pedido.estado == 2" >
+                        {{pedido.horaEstimadaFin |  date:'dd-MM-yyyy HH:mm:ss a'}}<!--  date:'short' -->
+                    </td>
+                <td>{{pedido.cliente.telefono}}</td>
+                <td>
+                    <ul>
+                        <div *ngFor="let item of
+                            pedido.detallePedido">
+                            <li *ngIf="item.articuloManufacturado == null">
+                                {{item.articuloReventa.denominacion}}
+                            </li>
+                            <li *ngIf="item.articuloReventa == null">
+                                {{item.articuloManufacturado.denominacion}}
+                            </li>
+                        </div>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                        <div *ngFor="let item of
+                            pedido.detallePedido">
+
+                            <li *ngIf="item.articuloManufacturado == null">
+                                {{item.cantidad}}
+                            </li>
+                            <li *ngIf="item.articuloReventa == null">
+                                {{item.cantidad}}
+                            </li>
+                        </div>
+                    </ul>
+                </td>
+                <td *ngIf="estado == 1">
+                    <button type="button" class="btn btn-success"
+                    [disabled]="rol == 'cliente'"
+                    *ngIf="rol != 'cliente'"
+                        (click)="actualizaEstado(i,2)">Confirmar</button>
+                </td>
+                <td *ngIf="estado == 2">
+                    <button type="button" class="btn btn-success"
+                    [disabled]="rol == 'cliente'"
+                    *ngIf="rol != 'cliente'"
+                        (click)="actualizaEstado(i,3)">Listo</button>
+                </td>
+                <td *ngIf="estado == 3  || estado == 4">
+
+                    <a  *ngIf="rol == 'admin' || rol=='cajero'" href="#modalAgregar" role="button" class="btn
+                        btn-success"
+                        data-toggle="modal" (click)="setPedido(i)">Facturar</a>
+                    <!--      <button type="button" class="btn btn-success">Facturar</button> -->
+                </td>
+                <td *ngIf="estado == 1">
+                    <button type="button" class="btn btn-danger"
+                    
+                        (click)="actualizaEstado(i,0)">Cancelar</button>
+
+                </td>
+                <td *ngIf="estado == 3">
+                    <button type="button" class="btn btn-primary"
+                       *ngIf="rol != 'cliente'"
+                        [disabled]="pedido.tipoEnvio == 1 || rol == 'cliente'"
+                        (click)="actualizaEstado(i,4)">En
+                        Delivery</button>
+                </td>
+                <td *ngIf="estado == 2">
+                    <button type="button"
+                    [disabled]="rol == 'cliente'"
+                    *ngIf="rol != 'cliente'"
+                    (click)="actualizaEstado(i,2)"
+                     class="btn btn-primary">Demorar</button>
+                </td>
+                <td *ngIf="estado == 5">
+                    <button type="button" (click)="verFactura(i)" class="btn
+                        btn-primary">Ver factura</button>
+                </td>
+            </tr>
+            <tr>
+                <!--  <td>
+                    <button type="button" (click)="rewind()" class="btn
+                        btn-secondary btn-sm">anterior</button>
+                </td> -->
+                <td colspan="2">
+                    <button type="button" (click)="rewind()" class="btn
+                        btn-secondary btn-sm">anterior</button>&nbsp;&nbsp;&nbsp;
+                    <span *ngFor="let p of totalPages; let i= index">
+                        <a style="cursor: pointer;" (click)="setPage(i)"
+                            [ngClass]="{'text-primary': i === page }">{{ i+1
+                            }}&nbsp;&nbsp;&nbsp;</a>
+                    </span>
+                    <button type="button" class="btn btn-primary btn-sm"
+                        (click)="forward()">siguiente</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

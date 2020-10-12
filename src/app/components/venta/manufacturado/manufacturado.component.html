@@ -1,0 +1,48 @@
+
+<div class="card-columns m-5">
+    <div class="card" style="width: 18rem;" *ngFor="let item of items;let i=
+        index">
+        <a href="#modalAgregar"  (click)="setDetalle(i)"
+        data-toggle="modal">
+        <img [src]="'http://localhost:9000/manufacturado/imagen/'+item.image"
+            class="card-img-top" alt="..." width="200" height="200"> </a>
+     
+        <div class="card-body">
+          
+            <h5 class="card-title">{{ item.denominacion }} </h5>
+       
+            <h5 class="card-text">${{item.precioVenta}}</h5>
+            <p class="card-text">Tiempo de cocina :
+                {{item.tiempoEstimadoCocina}} minutos</p>
+            <button type="button" class="btn btn-primary" [disabled]="rol != 'cliente' && rol != 'admin'"  (click)="agregar(i)">Agregar
+                al carrito</button>
+                
+        </div>
+    </div>
+    <div id="modalAgregar" class="modal fade mt-5">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                
+                <div class="modal-header mb-3" >
+                    <h4 class="modal-title">Detalles<br>{{detalle.denominacion}}</h4>
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">&times;</button>
+                </div>
+                    <div class="form-group row">
+
+                        <ul>
+                            <li *ngFor="let item of
+                                detalle.manufacturadoDetalle">
+                                {{item.articuloInsumo.denominacion}}
+                            </li>
+                        </ul>
+                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                        data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

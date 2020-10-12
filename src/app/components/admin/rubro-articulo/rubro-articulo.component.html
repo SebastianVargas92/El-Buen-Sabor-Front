@@ -1,0 +1,128 @@
+<div class="container mt-5">
+    <h1>Administrar Rubro Articulo</h1>
+    <a href="#modalAgregar" role="button" class="btn btn-large btn-success"
+        (click)="resetRubArt()"
+        data-toggle="modal">Agregar Rubro Articulo</a>
+
+    <div id="modalAgregar" class="modal fade mt-5">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header mb-3" *ngIf="rubroArticulo.denominacion
+                    == null">
+                    <h4 class="modal-title">Agregar Rubro Articulo</h4>
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-header mb-3" *ngIf="rubroArticulo.denominacion
+                    != null">
+                    <h4 class="modal-title">Actualizar Rubro Articulo</h4>
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">&times;</button>
+                </div>
+                <form (ngSubmit)="guardar(forma)" #forma="ngForm">
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label ml-2 mt-2">Denominación</label>
+                        <div class="col-6 ml-5">
+                            <input class="form-control"
+                                type="text"
+                                placeholder="Denominacion"
+                                name="denominacion"
+                                [(ngModel)]="rubroArticulo.denominacion"
+                                minlength="3" required #denominacion="ngModel">
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="denominacion.touched &&
+                                !denominacion.valid">
+                                <div *ngIf="denominacion.errors?.required">Este
+                                    campo es requerido</div>
+                                <div *ngIf="denominacion.errors?.minlength">
+                                    Por lo menos
+                                    {{denominacion.errors.minlength.requiredLength}}
+                                    carácteres.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label ml-2 mt-2">Rubro
+                            Padre</label>
+                        <div class="col-6">
+                            <select name="unidadMedida" class="form-control"
+                                [(ngModel)]="indice">
+                                <option value="0" [selected]="0">No tiene</option>
+                                <option [value]="rubro.id" *ngFor="let rubro of
+                                    rubrosPadres; let i= index">
+                                    {{rubro.denominacion}}</option>
+                            </select>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label">&nbsp;</label>
+                        <div class="input-group col-md-8">
+                            <button type="submit" [disabled]="!forma.valid"
+                                class="btn btn-success ml-3">
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-success">Aceptar</button> -->
+                    <button type="button" class="btn btn-default"
+                        data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="co-5 m-3">
+    </div>
+
+    <table class="table table-dark">
+        <thead>
+            <tr>
+                <th scope="col">ID </th>
+                <th scope="col">Denominacion</th>
+                <th scope="col">Rubro Padre</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let rubro of rubros; let i= index">
+                <th scope="row">{{rubro.id}}</th>
+                <td> {{rubro.denominacion}}</td>
+                <td *ngIf="rubro.rubro != null">
+                    {{rubro.rubro.denominacion}}</td>
+                <td *ngIf="rubro.rubro == null">
+                    NO </td>
+
+                <td><a href="#modalAgregar" role="button" class="btn btn-large
+                        btn-primary"
+                        data-toggle="modal" (click)="setRubroArticulo(i)">Editar</a></td>
+                <td>
+                    <button type="button" class="btn btn-danger"
+                        (click)="eliminar(i)">Eliminar</button>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2">
+                    <button type="button" (click)="rewind()" class="btn
+                        btn-secondary btn-sm">anterior</button>
+                    &nbsp;&nbsp;&nbsp;
+                    <span *ngFor="let p of totalPages; let i= index">
+                        <a style="cursor: pointer;" (click)="setPage(i)"
+                            [ngClass]="{'text-primary': i === page }">{{ i+1
+                            }}&nbsp;&nbsp;&nbsp;</a>
+                    </span>
+                    <button type="button" class="btn btn-primary btn-sm"
+                        (click)="forward()">siguiente</button>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+
+</div>

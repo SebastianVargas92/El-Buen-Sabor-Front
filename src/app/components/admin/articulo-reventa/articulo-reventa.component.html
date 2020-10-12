@@ -1,0 +1,257 @@
+<div class="container mt-5">
+    <h1>Administrar Articulo Reventa</h1>
+
+    <a href="#modalAgregar" role="button" class="btn btn-large btn-success"
+        (click)="resetReventa()"
+        data-toggle="modal">Agregar Articulo Reventa</a>
+
+    <div id="modalAgregar" class="modal fade mt-5">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header mb-3"
+                    *ngIf="articuloReventa.id == null">
+                    <h4 class="modal-title">Agregar Articulo Reventa</h4>
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-header mb-3"
+                    *ngIf="articuloReventa.id != null">
+                    <h4 class="modal-title">Actualizar Articulo Reventa</h4>
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">&times;</button>
+                </div>
+                <form (ngSubmit)="guardar(forma)" #forma="ngForm">
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label ml-2 mt-2">Denominación</label>
+                        <div class="col-7 ml-3">
+                            <input class="form-control"
+                                type="text"
+                                placeholder="Denominacion"
+                                name="denominacion"
+                                [(ngModel)]="articuloReventa.denominacion"
+                                minlength="3" required #denominacion="ngModel">
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="denominacion.touched &&
+                                !denominacion.valid">
+                                <div *ngIf="denominacion.errors?.required">Este
+                                    campo es requerido</div>
+                                <div *ngIf="denominacion.errors?.minlength">
+                                    Por lo menos
+                                    {{denominacion.errors.minlength.requiredLength}}
+                                    carácteres.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label ml-2">Precios</label>
+                        <div class="col-4">
+                            <input class="form-control"
+                                type="number"
+                                placeholder="Precio Compra"
+                                name="precioCompra"
+                                [(ngModel)]="articuloReventa.precioCompra"
+                                required #precioCompra="ngModel">
+
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="precioCompra.touched &&
+                                !precioCompra.valid">
+                                <div *ngIf="precioCompra.errors?.required">Este
+                                    campo es requerido.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <input class="form-control"
+                                type="number"
+                                placeholder="Precio Venta"
+                                name="precioVenta"
+                                [(ngModel)]="articuloReventa.precioVenta"
+                                required #precioVenta="ngModel">
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="precioVenta.touched &&
+                                !precioVenta.valid">
+                                <div *ngIf="precioVenta.errors?.required">Este
+                                    campo es requerido.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label ml-2">Stock</label>
+                        <div class="col-4">
+                            <input class="form-control"
+                                type="number"
+                                placeholder="Stock Minimo"
+                                name="stockMinimo"
+                                [(ngModel)]="articuloReventa.stockMinimo"
+                                required #stockMinimo="ngModel">
+
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="stockMinimo.touched &&
+                                !stockMinimo.valid">
+                                <div *ngIf="stockMinimo.errors?.required">Este
+                                    campo es requerido.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <input class="form-control"
+                                type="number"
+                                placeholder="Stock Actual"
+                                name="stockActual"
+                                [(ngModel)]="articuloReventa.stockActual"
+                                required #stockActual="ngModel">
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="stockActual.touched &&
+                                !stockActual.valid">
+                                <div *ngIf="stockActual.errors?.required">Este
+                                    campo es requerido.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row" *ngIf="false">
+                        <label class="col-2 col-form-label ml-2 mt-2">U. Medida</label>
+                        <div class="col-7">
+                            <!-- <select name="uMedida"
+                                [(ngModel)]="medida"
+                                [ngModelOptions]="{standalone: true}"
+                                class="form-control">
+                                <option value="0">Seleccione una unidad de
+                                    medida</option>
+                                <option [value]="unidad.id" *ngFor="let unidad
+                                    of uMedidas;
+                                    let i= index">
+                                    {{unidad.denominacion}}</option>
+                            </select> -->
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label ml-2 mt-2">Rubro</label>
+                        <div class="col-7">
+                            <select name="rubro" class="form-control"
+                                [(ngModel)]="indice">
+                                <option value="0" [selected]="0">Seleccione un
+                                    rubro</option>
+                                <option [value]="unidad.id" *ngFor="let unidad
+                                    of rubros;
+                                    let i= index">
+                                    {{unidad.denominacion}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label">&nbsp;</label>
+                        <div class="input-group col-md-8">
+                            <input type="file" class="d-none"
+                                (change)="onPhotoSelected($event)" #photoInput>
+                            <img [src]="photoSelected ||
+                                './assets/images/noimage.png'" width="200px"
+                                heigh="200px"
+                                class="img-fluid" alt="No image"
+                                (click)="photoInput.click()">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label">&nbsp;</label>
+                        <div class="input-group col-md-8">
+                            <button type="submit"
+                                *ngIf="articuloReventa.id == null"
+                                [disabled]="!forma.valid"
+                                class="btn btn-success ml-3">
+                                Guardar
+                            </button>
+                            <button type="button" (click)="actualizar()"
+                                *ngIf="articuloReventa.id != null"
+                                [disabled]="!forma.valid"
+                                class="btn btn-success ml-3">
+                                Actualizar
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+                <div class="modal-footer">
+                    <!-- <button type="button" class="btn btn-success">Aceptar</button> -->
+                    <button type="button" class="btn btn-default"
+                        data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="co-5 m-3">
+
+        <div class="row">
+            <div class="col">
+                <input #termino type="text" (keyup)="buscar(termino.value)"
+                    class="form-control" placeholder="Buscar Reventa...">
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-dark">
+        <thead>
+            <div class="row">
+                <div class="col-md-8">
+                    <select [(ngModel)]="order" (change)="buscar(termino.value)">
+                        <option value="id">Id</option>
+                        <option value="denominacion">Denominacion</option>
+                        <option value="precioCompra">Precio Compra</option>
+                        <option value="precioVenta">Precio Venta</option>
+                        <option value="stockActual">Stock Actual</option>
+                        <option value="stockMinimo">Stock Minimo</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <select [(ngModel)]="asc" (change)="buscar(termino.value)">
+                        <option value="true">Ascendente</option>
+                        <option value="false">Descendente</option>
+                    </select>
+                </div>
+            </div>
+            <tr>
+                <th scope="col">Image</th>
+                <th scope="col">Denominacion</th>
+                <th scope="col">Precio Compra</th>
+                <th scope="col">Precio Venta</th>
+                <th scope="col">Stock Minimo</th>
+                <th scope="col">Stock Actual </th>
+                <th scope="col">Unidad Medida</th>
+                <th scope="col">Rubro</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let insumo of reventa; let i= index">
+                <th scope="row"><img width="100px" heigh="100px"
+                        [src]="'http://localhost:9000/reventa/imagen/'+insumo.imagen"></th>
+                <td> {{insumo.denominacion}}</td>
+                <td>{{insumo.precioCompra}}</td>
+                <td>{{insumo.precioVenta}}</td>
+                <td>{{insumo.stockMinimo}}</td>
+                <td>{{insumo.stockActual}}</td>
+                <td>{{insumo.unidadMedida.denominacion}}</td>
+                <td>{{insumo.rubroArticulo.denominacion}}</td>
+                <td><a href="#modalAgregar" role="button" class="btn btn-large
+                        btn-primary"
+                        data-toggle="modal" (click)="setReventa(i)">Editar</a></td>
+                <td>
+                    <button type="button" class="btn btn-danger"
+                        (click)="eliminar(i)">Eliminar</button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" (click)="rewind()" class="btn
+                        btn-secondary btn-sm">anterior</button>
+                </td>
+                <td colspan="2">
+                    <span *ngFor="let p of totalPages; let i= index">
+                        <a style="cursor: pointer;" (click)="setPage(i)"
+                            [ngClass]="{'text-primary': i === page }">{{ i+1
+                            }}&nbsp;&nbsp;&nbsp;</a>
+                    </span>
+                    <button type="button" class="btn btn-primary btn-sm"
+                        (click)="forward()">siguiente</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

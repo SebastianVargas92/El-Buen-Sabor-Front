@@ -1,0 +1,292 @@
+<div class="container mt-5">
+    <h1>Administrar Usuarios.</h1>
+
+    <a href="#modalAgregar" role="button" class="btn btn-large btn-success"
+        (click)="resetUsuario()"
+        data-toggle="modal">Agregar Usuario</a>
+    <div id="modalAgregar" class="modal fade mt-5">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header mb-3"
+                    *ngIf="usuario.id == null">
+                    <h4 class="modal-title">Agregar Usuario</h4>
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-header mb-3"
+                    *ngIf="usuario.id != null">
+                    <h4 class="modal-title">Actualizar Usuario</h4>
+                    <button type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">&times;</button>
+                </div>
+                <form (ngSubmit)="guardar(forma)" #forma="ngForm">
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label ml-2">Usuario</label>
+                        <div class="col-4">
+                            <input class="form-control"
+                                type="text"
+                                placeholder="Nombre"
+                                name="nombre"
+                                [(ngModel)]="usuario.nombre"
+                                required #nombre="ngModel">
+
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="nombre.touched && !nombre.valid">
+                                <div *ngIf="nombre.errors?.required">Debe
+                                    ingresar el nombre</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <input class="form-control"
+                                type="text"
+                                placeholder="Apellido"
+                                name="apellido"
+                                [(ngModel)]="usuario.apellido"
+                                required #apellido="ngModel">
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="apellido.touched && !apellido.valid">
+                                <div *ngIf="apellido.errors?.required">Debe
+                                    ingresar el apellido</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label ml-2"></label>
+                        <div class="col-4">
+                            <input class="form-control"
+                                type="number"
+                                placeholder="Telefono"
+                                name="telefono"
+                                [(ngModel)]="usuario.telefono"
+                                required #telefono="ngModel">
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="telefono.touched && !telefono.valid">
+                                <div *ngIf="telefono.errors?.required">Debe
+                                    ingresar el numero</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <!--   <label class="col-3 col-form-label ml-1 mt-0">Rol</label> -->
+                            <select name="rol"
+                                [(ngModel)]="usuario.rol.id"
+                                [ngModelOptions]="{standalone: true}"
+                                class="form-control">
+                                <option value="0">Rol</option>
+                                <option [value]="unidad.id" *ngFor="let unidad
+                                    of roles;
+                                    let i= index">
+                                    {{unidad.denominacion}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label ml-2 mt-2">Correo</label>
+                        <div class="col-7">
+                            <input class="form-control"
+                                type="email"
+                                placeholder="Correo"
+                                name="email"
+                                [(ngModel)]="usuario.correo"
+                                required
+                                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                                minlength="8" #email="ngModel">
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="email.touched && !email.valid">
+                                <div *ngIf="email.errors?.required">Debe
+                                    ingresar el correo</div>
+                                <div *ngIf="email.errors?.minlength">Al menos 8
+                                    caracteres</div>
+                                <div *ngIf="email.errors?.pattern">
+                                    Debe cumplir con el formato de correo
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row" *ngIf="usuario.id == null">
+                        <label class="col-2 col-form-label ml-2 mt-2">Contraseña</label>
+                        <div class="col-7">
+                            <input class="form-control"
+                                type="password"
+                                placeholder="Password"
+                                name="password"
+                                [(ngModel)]="password"
+                                required minlength="8" maxlength="15"
+                                #pass="ngModel">
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="pass.touched && !pass.valid">
+                                <div *ngIf="pass.errors?.required">Debe ingresar
+                                    la contraseña</div>
+                                <div *ngIf="pass.errors?.minlength">Al menos 8
+                                    caracteres</div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label ml-2"></label>
+                        <div class="col-4">
+                            <input class="form-control"
+                                type="number"
+                                placeholder="Numero"
+                                name="numero"
+                                [(ngModel)]="usuario.domicilio.numero"
+                                required #numero="ngModel">
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="numero.touched && !numero.valid">
+                                <div *ngIf="numero.errors?.required">Debe
+                                    ingresar el numero</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <!--   <label class="col-3 col-form-label ml-1 mt-0">Rol</label> -->
+                            <select name="localidad"
+                                [(ngModel)]="indice"
+                                [ngModelOptions]="{standalone: true}"
+                                class="form-control">
+                                <option value="0">Localidad</option>
+                                <option [value]="unidad.id" *ngFor="let unidad
+                                    of localidades;
+                                    let i= index">
+                                    {{unidad.denominacion}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label ml-2 mt-2">Calle</label>
+                        <div class="col-7">
+                            <input class="form-control"
+                                type="text"
+                                placeholder="Calle"
+                                name="calle"
+                                [(ngModel)]="usuario.domicilio.calle"
+                                required minlength="6" #calle="ngModel">
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="calle.touched && !calle.valid">
+                                <div *ngIf="calle.errors?.required">Debe
+                                    ingresar la calle</div>
+                                <div *ngIf="calle.errors?.minlength">Al menos 6
+                                    caracteres</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row" *ngIf="usuario.id == null">
+                        <label class="col-2 col-form-label">&nbsp;</label>
+                        <div class="input-group col-md-8">
+                            <button type="submit" [disabled]="!forma.valid"
+                                class="btn btn-success ml-3">
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group row" *ngIf="usuario.id != null">
+                        <label class="col-2 col-form-label">&nbsp;</label>
+                        <div class="input-group col-md-8">
+                            <button type="button" (click)="actualizar()"
+                                [disabled]="!forma.valid"
+                                class="btn btn-success ml-3">
+                                Actualizar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                        data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+       <!--  <div class="row">
+            <div class="col-md-3">
+                <select [(ngModel)]="order" (change)="getUsuariosPag()">
+                    <option value="id">Id</option>
+                    <option value="denominacion">Nombre</option>
+                    <option value="precioCompra">Apellido</option>
+                    <option value="precioVenta">Rol</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select [(ngModel)]="asc" (change)="getUsuariosPag()">
+                    <option value="true">Ascendente</option>
+                    <option value="false">Descendente</option>
+                </select>
+            </div>
+        </div> -->
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th>  <select [(ngModel)]="order" (change)="getUsuariosPag()">
+                        <option value="id">Id</option>
+                        <option value="nombre">Nombre</option>
+                        <option value="apellido">Apellido</option>
+                    </select></th>
+                    <th>  <select [(ngModel)]="asc" (change)="getUsuariosPag()">
+                        <option value="true">Ascendente</option>
+                        <option value="false">Descendente</option>
+                    </select></th>
+                    <th>
+                        <select [(ngModel)]="rol" (change)="getUsuariosPag()">
+                            <option value="0">Todos</option>
+                            <option value="1">Cliente</option>
+                            <option value="2">Cocinero</option>
+                            <option value="3">Admin</option>
+                            <option value="4">Cajero</option>
+                        </select>
+
+                    </th>
+                </tr>
+                
+                <tr>
+                    <th scope="col">ID </th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Telefono</th>
+                    <th scope="col">Rol</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let us of usuarios; let i= index">
+                    <th scope="row">{{us.id}}</th>
+                    <td> {{us.nombre}}</td>
+                    <td>{{us.apellido}}</td>
+                    <td>{{us.telefono}}</td>
+                    <td>{{us.rol.descripcion}}</td>
+                    <td *ngIf="us.rol.descripcion != 'cliente' && us.rol.descripcion != 'admin'"><a
+                            href="#modalAgregar" role="button" class="btn
+                            btn-large
+                            btn-primary"
+                            data-toggle="modal" (click)="setUsuario(i)">Editar</a></td>
+                    <td *ngIf="us.rol.descripcion == 'cliente' || us.rol.descripcion == 'admin'">
+                        <button class="btn
+                            btn-large
+                            btn-primary"
+                            disabled="true"
+                            >Editar</button>
+                    </td>
+                    <!--  <td>
+                        <button type="button" class="btn btn-danger"
+                            (click)="eliminar(i)">Eliminar</button>
+                    </td> -->
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td colspan="2">
+                        <button type="button" (click)="rewind()" class="btn
+                            btn-secondary btn-sm">anterior</button>
+                        &nbsp;&nbsp;&nbsp;
+                        <span *ngFor="let p of totalPages; let i= index">
+                            <a style="cursor: pointer;" (click)="setPage(i)"
+                                [ngClass]="{'text-primary': i === page }">{{ i+1
+                                }}&nbsp;&nbsp;&nbsp;</a>
+                        </span>
+                        <button type="button" class="btn btn-primary btn-sm"
+                            (click)="forward()">siguiente</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

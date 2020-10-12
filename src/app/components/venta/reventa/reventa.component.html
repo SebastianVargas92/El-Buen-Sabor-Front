@@ -1,0 +1,15 @@
+<div class="card-columns m-5">
+    <div class="card" style="width: 18rem;" *ngFor="let item of items;let i=index">
+        <img [src]="'http://localhost:9000/reventa/imagen/'+item.imagen"
+            class="card-img-top" alt="..."  width="200" height="250">
+        <div class="card-body">
+            <h5 class="card-title">{{ item.denominacion }} </h5>
+            <h5 class="card-text">${{item.precioVenta}}</h5>
+            <button type="button" *ngIf=" hayStock(i)"
+             class="btn btn-primary" [disabled]="rol != 'cliente' && rol != 'admin'" (click)="agregar(i)">Agregar
+                al carrito</button>
+                <button type="button" disabled="true" *ngIf="!hayStock(i)"
+             class="btn btn-primary" >No hay stock</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="mt-5 mb-5">
+    <div>
+        <h3>Lista de platos</h3>
+        <br>
+        <hr>
+        <div class="row">
+        <div class="col-2 ml-5">
+        <select name="rubro"
+        (change)="getManufacturadoPag()"
+            [(ngModel)]="rubro"
+            [ngModelOptions]="{standalone: true}"
+            class="form-control">
+            <option value="0">Todos</option>
+            <option [value]="unidad.id" *ngFor="let unidad
+                of rubros;
+                let i= index">
+                {{unidad.denominacion}}</option>
+        </select>
+    </div>
+    <br>
+   
+        <div class="col-md-8 ">
+            <input #termino type="text" (keyup)="buscar(termino.value)" class="form-control" placeholder="Buscar plato... ">
+        </div>
+    </div>
+
+        <app-manufacturado [items]="platos"></app-manufacturado>
+
+        <button type="button" (click)="rewind()" class="btn
+            btn-secondary btn-sm">anterior</button>
+        <span *ngFor="let p of totalPages; let i= index">
+            <a style="cursor: pointer;" (click)="setPage(i)"
+                [ngClass]="{'text-primary': i === page }">
+                {{i+1}}&nbsp;&nbsp;&nbsp;</a>
+        </span>
+        <button type="button" class="btn btn-primary btn-sm"
+            (click)="forward()">siguiente</button>
+    </div>
+    <div class="mt-5">
+
+        <h3>Lista de Bebidas</h3>
+        <br>
+        <hr>
+        <div class="col-2 ml-5">
+            <select name="rubro"
+            (change)=" getReventa()"
+                [(ngModel)]="rubroA"
+                [ngModelOptions]="{standalone: true}"
+                class="form-control">
+
+                <option value="0">Todos</option>
+
+                <option [value]="unidad.id" *ngFor="let unidad
+                    of rubrosA;
+                    let i= index">
+                    {{unidad.denominacion}}</option>
+            </select>
+        </div>
+        <app-reventa [items]="bebidas"></app-reventa>
+
+        <button type="button" (click)="rewindb()" class="btn
+            btn-secondary btn-sm">anterior</button>
+        <span *ngFor="let p of totalPagesb; let i= index">
+            <a style="cursor: pointer;" (click)="setPageb(i)"
+                [ngClass]="{'text-primary': i === pageb }">
+                {{i+1}}&nbsp;&nbsp;&nbsp;</a>
+        </span>
+        <button type="button" class="btn btn-primary btn-sm"
+            (click)="forwardb()">siguiente</button>
+    </div>
+
+</div>

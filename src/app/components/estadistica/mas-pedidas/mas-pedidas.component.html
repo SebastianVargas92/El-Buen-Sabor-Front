@@ -1,0 +1,50 @@
+<div class="container mt-5">
+    <h1>Comidas más pedidas.</h1>
+
+    <div class="media">
+        <form (ngSubmit)="guardar(forma)" #forma="ngForm">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label>Desde</label>
+                    <input type="date" name="desde"
+                        [(ngModel)]="fechas.desde" required />
+                </div>
+                <div class="col-4 ml-3">
+                    <label>Hasta</label>
+                    <input type="date" name="hasta"
+                        [(ngModel)]="fechas.hasta" required />
+                </div>
+            </div>
+
+            <button class="btn btn-success" [disabled]="!forma.valid"
+                type="submit">Buscar</button>
+                &nbsp;&nbsp;&nbsp;
+                <button class="btn btn-success" [disabled]="!forma.valid"
+                type="button" (click)="excel()">Excel</button>
+        </form>
+    </div>
+
+    <div class="mt-3">
+    <div class="mt-3">
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">Image</th>
+                    <th scope="col">Denominacion</th>
+                    <th scope="col">Precio </th>
+                    <th scope="col">Cantidad Vendidas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of masVendidas">
+                    <th scope="row"><img width="100px" heigh="100px"
+                            [src]="'http://localhost:9000/manufacturado/imagen/'+item.articulo.image"></th>
+                    <td>{{item.articulo.denominacion}}</td>
+                    <td>{{item.articulo.precioVenta | currency}}</td>
+                    <td>{{item.cantidad}}</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>

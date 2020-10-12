@@ -1,0 +1,95 @@
+<div class="containe mt-5">
+    <h2>Mi carrito</h2>
+
+    <div class="mt-4 mb-4">
+        <h3>Detalles</h3>
+    <div *ngIf="vacio()">
+    <h6> Agregar tus platos y bebidas favoritas desde el <a routerLink="/home">Home</a>.</h6>
+    </div>
+
+        <table *ngIf="!vacio()" >
+            <thead>
+                <tr>
+                    <th scope="col">Denominacion</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Subtotal</th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let c of carrito;let i= index;">
+                    <td *ngIf="c.articuloManufacturado != null">
+                        {{c.articuloManufacturado.denominacion}}
+                        &nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td *ngIf="c.articuloReventa != null">
+                        {{c.articuloReventa.denominacion}}
+                        &nbsp;&nbsp;&nbsp;
+                    </td>
+                    <td>
+                        &nbsp;&nbsp;&nbsp;<button type="button" class="btn
+                            btn-secondary btn-sm" [disabled]="c.cantidad == 1"
+                            (click)="decrementa(i)">-</button> cant :
+                        {{c.cantidad}} <button type="button" class="btn
+                            btn-primary btn-sm"
+                            (click)="incrementa(i)">+</button>&nbsp;&nbsp;&nbsp;</td>
+                    <td>
+                        &nbsp;&nbsp;&nbsp;
+                        {{c.subtotal | currency}}
+                    </td>
+                    <td> &nbsp;&nbsp;&nbsp;<button type="button"
+                        class="btn btn-danger btn-sm" (click)="eliminar(i)">Eliminar</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br>
+        <h3>Telefono</h3>
+        
+         <div *ngIf="pedido.cliente.telefono == 0 || pedido.cliente.telefono == null">
+             <h5>Actualiza tu telefono en <a routerLink="/cliente/edit">Mi Perfil</a>.</h5>
+
+         </div>
+         <div  *ngIf="pedido.cliente.telefono != 0 && pedido.cliente.telefono != null ">
+            <h6>Telefono de contacto : {{pedido.cliente.telefono}}</h6>
+
+        </div>
+        <br>
+        <h3>Forma de retiro</h3>
+
+        <div class="radio-inline" (change)="calcularTotal()" >
+            <input type="radio" value='1' name="retiro"
+                [(ngModel)]="pedido.tipoEnvio" 
+                />
+            <label class="radio-label"> Local</label>
+            <br>
+            <input type="radio" value='2' name="retiro"
+                [(ngModel)]="pedido.tipoEnvio" />
+            <label class="radio-label">Delivery</label>
+        </div>
+
+        <div *ngIf="pedido.tipoEnvio == 1">
+            <h5>Te esperamos en patricias 223 de Ciudad.</h5>
+
+        </div>
+
+        <div *ngIf="pedido.tipoEnvio == 2">
+            <div *ngIf="pedido.cliente.domicilio != null">
+                <h5> Tu pedido será enviado a {{pedido.cliente.domicilio.calle}}
+                    {{pedido.cliente.domicilio.numero}},
+                    {{pedido.cliente.domicilio.localidad.denominacion}}.</h5>
+            </div>
+            <div *ngIf="pedido.cliente.domicilio == null">
+                <h5> Actualiza tu domicilio en <a routerLink="/cliente/edit">Mi Perfil</a>.</h5>
+            </div>
+
+        </div>
+
+
+        <h5>Total : {{total | currency}}</h5>
+    </div>
+    <button type="button" class="btn btn-success"[disabled]="vacio()" (click)="confirmarPedido()">Confirmar</button>
+    &nbsp;&nbsp;&nbsp;
+    <button type="button" class="btn btn-danger" [disabled]="vacio()" (click)="limpiar()">Limpiar</button>
+</div>

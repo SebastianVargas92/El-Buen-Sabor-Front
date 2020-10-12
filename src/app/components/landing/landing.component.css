@@ -1,0 +1,220 @@
+.jumbotron-gradient {
+    background: linear-gradient(40deg, rgba(0,51,199,.3), rgba(209,149,249,.3));
+  }
+  .jumbotron {
+    width: auto;
+  }
+  .heading {
+    margin: 0 6rem;
+    font-weight: 700;
+    color: #5d4267;
+  }
+  .subheading {
+    margin: 2.5rem 6rem;
+    color: #bcb2c0;
+  }
+  .btn.btn-margin {
+    margin-left: 23rem;
+    margin-top: 3rem;
+  }
+  .btn.btn-lily {
+    background-image: linear-gradient(to right, #84fab0 0%, #8fd3f4 0%, #84fab0 100%);
+    font-size: 11px;
+  }
+  
+  .btn:hover {
+    background-position: right center; /* change the direction of the change here */
+  }
+  .btn {
+    flex: 1 1 auto;
+    margin: 10px;
+    padding: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+   /* text-shadow: 0px 0px 10px rgba(0,0,0,0.2);*/
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+   }
+  
+  .title {
+    margin-top: 6rem;
+    margin-bottom: 2rem;
+    color: #5d4267;
+  }
+  .subtitle {
+    color: #bcb2c0;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-bottom: 6rem;
+  }
+  
+  /* Navbar*/
+  .navbar {
+    
+    width: 100%;  
+    background-color: #555;  
+    padding-top: 0;
+    padding-bottom: 0;
+    
+    
+  }
+  
+  .navbar a {
+    float: left;
+    padding: 12px;
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+  .navbar a:hover {
+    background-color: #000;
+  }
+   
+  @media screen and (max-width:500px) {
+    .navbar a {
+      float: none;
+      display: block;
+    }  
+  }
+  
+  .dropdown-menu {
+    color:black;
+    background-color: cadetblue;
+    left: unset !important;
+    right: 0;
+  }
+  
+  .headings {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding: 2em 0;
+  }
+  
+  .title {
+    margin: 0;
+    font-weight: 700;
+    color: #5d4267;
+  }
+  
+  .hr {
+    display: block;
+    flex: 1;
+    margin: 0 30px;
+    height: 3px;
+    background: #D4D4D4;
+  }
+  
+   #us{
+    background-color: white;
+   }  
+  
+   #quote-carousel {
+      padding: 0 10px 30px 10px;
+      margin-top: 30px;
+      position:auto;
+      
+      /* Control buttons  */
+      /* Previous button  */
+      /* Next button  */
+      /* Changes the position of the indicators */
+      /* Changes the color of the indicators */
+  }
+  #quote-carousel .carousel-control {
+      background: none;
+      color: #CACACA;
+      font-size: 2.3em;
+      text-shadow: none;
+      margin-top: 30px;
+  }
+  #quote-carousel .carousel-control.left {
+      left: auto;
+  }
+  #quote-carousel .carousel-control.right {
+      right: -40px;
+  }
+  #quote-carousel .carousel-indicators {
+      right: 50%;
+      top: auto;
+      bottom: 0px;
+      margin-right: -19px;
+  }
+  #quote-carousel .carousel-indicators li {
+      width: 50px;
+      height: 50px;
+      margin: 5px;
+      cursor: pointer;
+      border: 4px solid #CCC;
+      border-radius: 50px;
+      opacity: 0.4;
+      overflow: hidden;
+      transition: all 0.4s;
+  }
+  #quote-carousel .carousel-indicators .active {
+      background: #333333;
+      width: 128px;
+      height: 128px;
+      border-radius: 100px;
+      border-color: black;
+      opacity: 1;
+      overflow: hidden;
+  }
+  .carousel-inner {
+      min-height: 300px;
+  }
+  .item blockquote {
+      border-left: none;    
+      margin: 0;
+  }
+  .item blockquote p:before {
+      content: "\f10d";
+      font-family: 'Fontawesome';
+      float: left;
+      margin-right: 10px;
+  }
+  #us-jumbo{
+    background-color: lightblue;
+  }
+  
+  .map-container-section {
+    overflow:hidden;
+    padding-bottom:56.25%;
+    position:relative;
+    left: 0;
+    height:0;
+  }
+  .map-container-section iframe {
+    left:0;
+    top:0;
+    height:50%;
+    width:100%;
+    position:absolute;
+  }
+  #contact {
+  background-color: white;
+  
+  }
+  
+  #infoContact{
+    position:relative;
+    top: -300px;
+  }
+  
+  .scroll-to-top {
+   position: fixed;
+   bottom: 15px;
+   right: 15px;
+   opacity: 0;
+   transition: all 1s ease-in-out; 
+  
+  }
+  
+  .show-scrollTop {
+   opacity: 1;
+   transition: all .2s ease-in-out;
+  }
+  

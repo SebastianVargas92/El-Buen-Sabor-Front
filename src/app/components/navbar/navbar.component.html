@@ -1,0 +1,69 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="">El buen sabor</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item " routerLinkActive="active" >
+                <a class="nav-link" routerLink="home">Home <span class="sr-only">(current)</span></a>
+            </li>
+           
+            <li  class="nav-item " routerLinkActive="active" *ngIf="isLogged && rol == 'cliente' || isLogged && rol == 'admin'">
+                <a class="nav-link" routerLink="carrito">Carrito <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item " routerLinkActive="active" *ngIf="isLogged ">
+                <a class="nav-link" routerLink="admin/pedido">Pedidos<span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+
+        <ul class="navbar-nav ">
+            <li class="nav-item dropdown" *ngIf="isLogged && rol ==='admin'" >
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Estadistica
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item"  routerLink="admin/stock">Stock Minimo</a>
+                  <a class="dropdown-item"  routerLink="admin/ingresos">Ingresos</a>
+                  <a class="dropdown-item"  routerLink="admin/maspedidas">Mas pedidas</a>
+                  <a class="dropdown-item"  routerLink="admin/pcliente">Pedidos Cliente</a>
+                
+                </div>
+              </li>
+            <li class="nav-item dropdown" *ngIf="isLogged && rol ==='admin'" >
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Administrar
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item"  routerLink="admin/rgeneral">Rubro General</a>
+                  <a class="dropdown-item"  routerLink="admin/rarticulo">Rubro Articulo</a>
+                  <a class="dropdown-item"  routerLink="admin/insumo">Articulo Insumo</a>
+                  <a class="dropdown-item"  routerLink="admin/reventa">Articulo Reventa</a>
+                  <a class="dropdown-item"  routerLink="admin/manufacturado">Articulo Manufacturado</a>
+                  <a class="dropdown-item"  routerLink="admin/usuario">Usuarios</a>
+                </div>
+              </li>
+
+            <li class="nav-item " routerLinkActive="active" *ngIf="!isLogged">
+                <a class="nav-link" routerLink="user/register">Register</a>
+            </li>
+            <li class="nav-item" routerLinkActive="active" *ngIf="!isLogged">
+                <a class="nav-link" routerLink="user/login">Login</a>
+            </li>
+            <li class="nav-item" *ngIf="isLogged && rol == 'cocinero'">
+              <a class="nav-link" routerLink="admin/manufacturado">Manufacturados</a>
+          </li>
+            <li class="nav-item" *ngIf="isLogged">
+                <a class="nav-link" routerLink="cliente/edit">Mi perfil</a>
+            </li>
+            <li class="nav-item" *ngIf="isLogged">
+                <a href="#" class="nav-link" (click)="onLogout()">Salir</a>
+            </li>
+        </ul>
+
+
+
+    </div>
+</nav>

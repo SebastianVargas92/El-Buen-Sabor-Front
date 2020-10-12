@@ -1,0 +1,48 @@
+<section id="reset" class="mb-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-4 mx-auto">
+                <div class="card_login">
+                    <div class="card">
+                        <div class="card-body text-center">
+                
+                            <form  #forma="ngForm" (submit)="resetPass()">
+                                <div class="form-group">
+                                    <h1 class="h3 mb-3 font-weight-normal" *ngIf="!isError">Restablece tu contraseña</h1>
+                                </div>
+                                <p>Ingresa tu correo</p>
+                                <div class="form-group">
+                                    <input type="email" #correo="ngModel"  name="email" class="form-control" placeholder="Email" [(ngModel)]="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"  required minlength="8">
+                                </div>
+                                <div class="alert alert-danger" role="alert" *ngIf="correo.touched && !correo.valid">
+                                    <div *ngIf="correo.errors?.required">Debe ingresar el correo</div>
+                                    <div *ngIf="correo.errors?.minlength">Al menos 8 caracteres</div>
+                                    <div *ngIf="correo.errors?.pattern" >
+                                        Debe cumplir con el formato de correo
+                                    </div>
+                                </div>
+
+                                <div class="alert alert-success" role="alert" *ngIf="enviado">
+                                    
+                                    <div >Te enviamos un correo para recuperar tu contraseña.</div>
+                                    <div class="form-group">
+                                        <a routerLink="/user/login" class="form-control login-user">Ir al login</a>
+                                    </div>
+                                    
+                                </div>
+                               
+                                <div class="alert alert-danger" role="alert" *ngIf="!enviado && msgError ">
+                                    
+                                    <div >{{msgError}}</div>
+                                </div>
+
+                                <button type="submit" [disabled]="!forma.valid" class="btn btn-lg btn-primary btn-block">Restabler contraseña</button>
+                                
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

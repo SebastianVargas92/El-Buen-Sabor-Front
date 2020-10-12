@@ -1,0 +1,52 @@
+<section id="login" class="mb-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-4 mx-auto">
+                <div class="card_login">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <form  #forma="ngForm" (submit)="onLogin()">
+                                <div class="form-group">
+                                    <h1 class="h3 mb-3 font-weight-normal" *ngIf="!isError">Inicia Sesión</h1>
+
+                                    <button class="btn-social btn-google btn btn-block" (click)="onLoginGoogle()">
+                                        <span class="fa fa-google"></span>Inicia con GOOGLE</button>
+                                </div>
+                                <p>o inicia con tu correo</p>
+                                <div class="form-group">
+                                    <input type="email" #correo="ngModel"  name="email" class="form-control" placeholder="Email" [(ngModel)]="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"  required minlength="8">
+                                </div>
+                                <div class="alert alert-danger" role="alert" *ngIf="correo.touched && !correo.valid">
+                                    <div *ngIf="correo.errors?.required">Debe ingresar el correo</div>
+                                    <div *ngIf="correo.errors?.minlength">Al menos 8 caracteres</div>
+                                    <div *ngIf="correo.errors?.pattern" >
+                                        Debe cumplir con el formato de correo
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" #pass="ngModel" name="password" class="form-control" placeholder="Password" [(ngModel)]="password" required minlength="8">
+                                    <a routerLink="/user/reset">
+                                        <p><small>Olvidé mi contraseña</small> </p>
+                                    </a>
+                                </div>
+                                <div class="alert alert-danger" role="alert" *ngIf="pass.touched && !pass.valid">
+                                    <div *ngIf="pass.errors.required">Debe ingresar la contraseña</div>
+                                    <div *ngIf="pass.errors.minlength">Al menos 8 caracteres</div>
+                                </div>
+                                <div class="alert alert-danger" role="alert" *ngIf="isError">
+                                    
+                                    <div *ngIf="isError">{{msgError}}</div>
+                                </div>
+
+                                <button type="submit" [disabled]="!forma.valid" class="btn btn-lg btn-primary btn-block">Login</button>
+                                <div class="form-group">
+                                    <a routerLink="/user/register" class="form-control login-user">¿ No tienes cuenta ?</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
